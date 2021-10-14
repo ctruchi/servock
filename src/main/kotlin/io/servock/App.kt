@@ -7,6 +7,7 @@ import org.http4k.core.then
 import org.http4k.core.with
 import org.http4k.lens.Header
 import org.http4k.routing.bind
+import org.http4k.routing.path
 import org.http4k.routing.routes
 
 private val logger = KotlinLogging.logger {}
@@ -17,7 +18,7 @@ object App {
             .then(
                 routes(
                     *routeMatcher.map {
-                        it.request.toRequest() to { _: Request -> it.response.toResponse() }
+                        it.request.toRequest() to { request: Request -> it.response buildResponseFor request }
                     }.toTypedArray()
                 )
             )
@@ -25,15 +26,28 @@ object App {
 
 private fun RequestMatcher.toRequest() = path bind method
 
-private fun ResponseBuilder.toResponse() =
+private infix fun ResponseBuilder.buildResponseFor(request: Request) =
     with(this) {
         Response(status)
             .let {
                 if (content != null) {
-                    it.body(content.payload)
+                    it.body(content.payload extrapolateWith request)
                         .with(Header.CONTENT_TYPE of content.contentType)
                 } else {
                     it
                 }
             }
     }
+
+private infix fun String.extrapolateWith(request: Request) =
+    "\\$\\{[^}]+}".toRegex().find(this)
+        ?.let {
+            it.groupValues
+                .map {
+                    it.substring(2, it.length - 1)
+                }
+                .fold(this) { res, s ->
+                    res.replace("\${$s}", request.path(s) ?: "")
+                }
+        }
+        ?: this
