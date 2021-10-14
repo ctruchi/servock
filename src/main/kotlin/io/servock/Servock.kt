@@ -11,7 +11,7 @@ import org.http4k.server.asServer
 
 
 fun main() {
-    App()
+    App(emptyList())
         .asServer(Netty(System.getProperty("port", "8080").toInt()))
         .start()
 }

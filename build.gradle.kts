@@ -23,6 +23,11 @@ allprojects {
             apiVersion = "1.5"
         }
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        ignoreFailures = true
+    }
 }
 
 dependencies {
@@ -32,4 +37,7 @@ dependencies {
 
     api("io.github.microutils:kotlin-logging:2.0.11")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    "testImplementation"("io.strikt:strikt-core:0.32.0")
 }
