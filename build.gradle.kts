@@ -25,3 +25,11 @@ allprojects {
     }
 }
 
+dependencies {
+    implementation(platform("org.http4k:http4k-bom:4.14.1.4"))
+    implementation("org.http4k:http4k-core")
+    implementation("org.http4k:http4k-server-netty")
+
+    api("io.github.microutils:kotlin-logging:2.0.11")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+}
