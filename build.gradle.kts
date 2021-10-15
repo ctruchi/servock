@@ -36,7 +36,9 @@ dependencies {
     implementation("org.http4k:http4k-server-netty")
 
     api("io.github.microutils:kotlin-logging:2.0.11")
-    runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.6")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.13.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     "testImplementation"("io.strikt:strikt-core:0.32.0")

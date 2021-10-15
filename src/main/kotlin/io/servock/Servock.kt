@@ -11,9 +11,11 @@ import org.http4k.server.asServer
 
 
 fun main() {
-    App(emptyList())
-        .asServer(Netty(System.getProperty("port", "8080").toInt()))
-        .start()
+    with(Conf(System.getProperty("conf", "servock-routes.json"))) {
+        App(routes)
+            .asServer(Netty(System.getProperty("port", "8080").toInt()))
+            .start()
+    }
 }
 
 object LogRequest {
