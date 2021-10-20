@@ -2,10 +2,12 @@ package io.servock
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import mu.KLogging
 import org.http4k.core.ContentType
 import org.http4k.core.Parameters
 import org.http4k.core.Status
 import java.nio.file.Paths
+import kotlin.math.log
 
 private val mapper = ObjectMapper()
     .registerModule(
@@ -14,6 +16,10 @@ private val mapper = ObjectMapper()
     )
 
 class Conf(val confPath: String) {
+
+    init {
+        logger.info("Reading conf from $confPath")
+    }
 
     val routes = mapper.readerFor(RouteDto::class.java).readValues<RouteDto>(Paths.get(confPath).toFile())
         .asSequence()
@@ -35,6 +41,8 @@ class Conf(val confPath: String) {
                 )
             )
         }
+
+    companion object: KLogging()
 }
 
 private data class RouteDto(
