@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     base
     kotlin("jvm") version "1.5.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 val versionNumber = System.getenv("version")?.substringAfter("R-") ?: "DEV"
@@ -27,6 +28,16 @@ allprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
         ignoreFailures = true
+    }
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes(
+            mapOf(
+                "Main-Class" to "io.servock.ServockKt"
+            )
+        )
     }
 }
 
