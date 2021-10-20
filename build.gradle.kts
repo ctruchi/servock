@@ -53,4 +53,6 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     "testImplementation"("io.strikt:strikt-core:0.32.0")
+
+    testImplementation("org.testcontainers:testcontainers:1.16.0")
 }

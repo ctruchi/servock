@@ -1,0 +1,15 @@
+[
+  {
+    "request": {
+      "path": "/test",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "content": {
+        "payload": "test content",
+        "contentType": "text/plain; charset=utf-8"
+      }
+    }
+  }
+]
