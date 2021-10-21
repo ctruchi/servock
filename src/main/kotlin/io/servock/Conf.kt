@@ -6,7 +6,9 @@ import mu.KLogging
 import org.http4k.core.ContentType
 import org.http4k.core.Parameters
 import org.http4k.core.Status
+import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.io.path.absolutePathString
 import kotlin.math.log
 
 private val mapper = ObjectMapper()
@@ -15,13 +17,13 @@ private val mapper = ObjectMapper()
             .build()
     )
 
-class Conf(val confPath: String) {
+class Conf(val confPath: Path) {
 
     init {
-        logger.info("Reading conf from $confPath")
+        logger.info("Reading conf from ${confPath.absolutePathString()}")
     }
 
-    val routes = mapper.readerFor(RouteDto::class.java).readValues<RouteDto>(Paths.get(confPath).toFile())
+    val routes = mapper.readerFor(RouteDto::class.java).readValues<RouteDto>(confPath.toFile())
         .asSequence()
         .toList()
         .map {
