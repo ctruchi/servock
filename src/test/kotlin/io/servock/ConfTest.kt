@@ -56,5 +56,5 @@ internal class ConfTest {
     }
 
     private fun String.resourceAsPath() =
-        Thread.currentThread().contextClassLoader.getResource(this).toURI().toPath().toString()
+        Thread.currentThread().contextClassLoader.getResource(this).toURI().toPath()
 }
