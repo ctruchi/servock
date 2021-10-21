@@ -73,6 +73,6 @@ private fun parseValueAndDirectives(it: String): Pair<String, Parameters> =
 
 private fun String.asContentType() = parseValueAndDirectives(this).let {
     ContentType(it.first, it.second
-        .filter { it.first.toLowerCase() in setOf("boundary", "charset", "media-type") }
+        .filter { it.first.lowercase() in setOf("boundary", "charset", "media-type") }
     )
 }
